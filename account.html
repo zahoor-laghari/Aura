@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account - Aura Cosmetics</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Tailwind Custom Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                        'playfair': ['Playfair Display', 'serif']
+                    },
+                    colors: {
+                        'aura': {
+                            'rose': '#e11d48',
+                            'pink': '#ec4899',
+                            'purple': '#8b5cf6',
+                            'gold': '#f59e0b',
+                            'dark': '#1f2937',
+                            'light': '#f8fafc'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-inter bg-gray-50 text-gray-900">
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-md z-50 border-b border-gray-100 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-4 lg:px-6">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="index.html" class="font-playfair text-2xl lg:text-3xl font-bold text-aura-rose hover:text-aura-pink transition-colors duration-300">
+                        Aura
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 hover:text-aura-rose font-medium transition-colors duration-300">Home</a>
+                    <a href="products.html" class="nav-link text-gray-700 hover:text-aura-rose font-medium transition-colors duration-300">Products</a>
+                    <a href="#" class="nav-link text-gray-700 hover:text-aura-rose font-medium transition-colors duration-300">Collections</a>
+                    <a href="#" class="nav-link text-gray-700 hover:text-aura-rose font-medium transition-colors duration-300">About</a>
+                    <a href="#" class="nav-link text-gray-700 hover:text-aura-rose font-medium transition-colors duration-300">Contact</a>
+                </div>
+                
+                <!-- Search & Actions -->
+                <div class="flex items-center space-x-4">
+                    <!-- User Account -->
+                    <button class="p-2 rounded-full bg-aura-rose text-white transition-colors duration-300" id="userBtn">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    
+                    <!-- Wishlist -->
+                    <button class="p-2 rounded-full hover:bg-gray-100 transition-colors duration-300 relative" id="wishlistBtn">
+                        <i class="fas fa-heart text-gray-700"></i>
+                        <span class="absolute -top-1 -right-1 bg-aura-rose text-white text-xs rounded-full w-4 h-4 flex items-center justify-center hidden" id="wishlistCount">0</span>
+                    </button>
+                    
+                    <!-- Cart -->
+                    <button class="p-2 rounded-full hover:bg-gray-100 transition-colors duration-300 relative" id="cartBtn">
+                        <i class="fas fa-shopping-bag text-gray-700"></i>
+                        <span class="absolute -top-1 -right-1 bg-aura-rose text-white text-xs rounded-full w-4 h-4 flex items-center justify-center" id="cartCount">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Account Section -->
+    <section class="pt-24 pb-12 min-h-screen">
+        <div class="container mx-auto px-4 lg:px-6">
+            
+            <!-- Login/Register Form (shown when not logged in) -->
+            <div class="max-w-md mx-auto" id="authForms" data-aos="fade-up">
+                
+                <!-- Tab Navigation -->
+                <div class="flex border-b border-gray-200 mb-8">
+                    <button class="auth-tab active flex-1 py-3 px-4 font-semibold text-aura-rose border-b-2 border-aura-rose transition-colors" data-tab="login">
+                        Sign In
+                    </button>
+                    <button class="auth-tab flex-1 py-3 px-4 font-semibold text-gray-600 hover:text-aura-rose transition-colors" data-tab="register">
+                        Create Account
+                    </button>
+                </div>
+                
+                <!-- Login Form -->
+                <div class="auth-form active" id="loginForm">
+                    <div class="bg-white rounded-2xl shadow-lg p-8">
+                        <h2 class="font-playfair text-2xl font-bold text-gray-900 mb-6 text-center">Welcome Back</h2>
+                        
+                        <form class="space-y-4" id="signInForm">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-900 mb-2">Email Address</label>
+                                <input type="email" required class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-aura-rose/30 focus:border-aura-rose" placeholder="your@email.com">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-900 mb-2">Password</label>
+                                <div class="relative">
+                                    <input type="password" required class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-aura-rose/30 focus:border-aura-rose pr-12" placeholder="••••••••">
+                                    <button type="button" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600" onclick="togglePassword(this)">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <label class="flex items-center space-x-2">
+                                    <input type="checkbox" class="w-4 h-4 text-aura-rose focus:ring-aura-rose border-gray-300 rounded">
+                                    <span class="text-sm text-gray-600">Remember me</span>
+                                </label>
+                                <a href="#" class="text-sm text-aura-rose hover:text-aura-pink transition-colors">Forgot Password?</a>
+                            </div>
+                            
+                            <button type="submit" class="btn-primary w-full text-lg py-3">
+                                Sign In
+                            </button>
+                        </form>
+                        
+                        <div class="relative my-6">
+                            <div class="absolute inset-0 flex items-center">
+                                <div class="w-full border-t border-gray-200"></div>
+                            </div>
+                            <div class="relative flex justify-center text-sm">
+                                <span class="px-2 bg-white text-gray-500">Or continue with</span>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <button class="flex items-center justify-center px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                                <i class="fab fa-google text-red-500 mr-2"></i>
+                                Google
+                            </button>
+                            <button class="flex items-center justify-center px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                                <i class="fab fa-facebook text-blue-600 mr-2"></i>
+                                Facebook
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Register Form -->
+                <div class="auth-form hidden" id="registerForm">
+                    <div class="bg-white rounded-2xl shadow-lg p-8">
+                        <h2 class="font-playfair text-2xl font-bold text-gray-900 mb-6 text-center">Create Account</h2>
+                        
+                        <form class="space-y-4" id="signUpForm">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-900 mb-2">First Name</label>
+                                    <input type="text" required class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-aura-rose/30 focus:border-aura-rose" placeholder="Jane">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-900 mb-2">Last Name</label>
+                                    <input type="text" required class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-aura-rose/30 focus:border-aura-rose" placeholder="Doe">
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-900 mb-2">Email Address</label>
+                                <input type="email" required class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-aura-rose/30 focus:border-aura-rose" placeholder="your@email.com">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-900 mb-2">Password</label>
+                                <div class="relative">
+                                    <input type="password" required class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-aura-rose/30 focus:border-aura-rose pr-12" placeholder="••••••••">
+                                    <button type="button" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600" onclick="togglePassword(this)">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="mt-2 text-sm text-gray-500">
+                                    Password must be at least 8 characters long
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="flex items-start space-x-3">
+                                    <input type="checkbox" required class="w-4 h-4 text-aura-rose focus:ring-aura-rose border-gray-300 rounded mt-1">
+                                    <span class="text-sm text-gray-600">
+                                        I agree to the <a href="#" class="text-aura-rose hover:text-aura-pink">Terms of Service</a> 
+                                        and <a href="#" class="text-aura-rose hover:text-aura-pink">Privacy Policy</a>
+                                    </span>
+                                </label>
+                            </div>
+                            
+                            <div>
+                                <label class="flex items-center space-x-2">
+                                    <input type="checkbox" class="w-4 h-4 text-aura-rose focus:ring-aura-rose border-gray-300 rounded">
+                                    <span class="text-sm text-gray-600">Subscribe to our newsletter for exclusive offers</span>
+                                </label>
+                            </div>
+                            
+                            <button type="submit" class="btn-primary w-full text-lg py-3">
+                                Create Account
+                            </button>
+                        </form>
+                        
+                        <div class="relative my-6">
+                            <div class="absolute inset-0 flex items-center">
+                                <div class="w-full border-t border-gray-200"></div>
+                            </div>
+                            <div class="relative flex justify-center text-sm">
+                                <span class="px-2 bg-white text-gray-500">Or continue with</span>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <button class="flex items-center justify-center px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                                <i class="fab fa-google text-red-500 mr-2"></i>
+                                Google
+                            </button>
+                            <button class="flex items-center justify-center px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+                                <i class="fab fa-facebook text-blue-600 mr-2"></i>
+                                Facebook
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Account Dashboard (shown when logged in) -->
+            <div class="hidden" id="accountDashboard" data-aos="fade-up">
+                <div class="grid lg:grid-cols-4 gap-8">
+                    
+                    <!-- Sidebar Navigation -->
+                    <div class="lg:col-span-1">
+                        <div class="bg-white rounded-2xl shadow-lg p-6 sticky top-24">
+                            
+                            <!-- User Info -->
+                            <div class="text-center mb-8 pb-6 border-b border-gray-200">
+                                <div class="w-20 h-20 bg-aura-rose rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4" id="userAvatar">
+                                    J
+                                </div>
+                                <h3 class="font-semibold text-lg text-gray-900" id="userName">Jane Doe</h3>
+                                <p class="text-gray-600" id="userEmail">jane@example.com</p>
+                            </div>
+                            
+                            <!-- Navigation Menu -->
+                            <nav class="space-y-2">
+                                <button class="account-nav-btn active w-full text-left px-4 py-3 rounded-lg font-medium transition-colors" data-section="overview">
+                                    <i class="fas fa-tachometer-alt mr-3"></i>
+                                    Overview
+                                </button>
+                                <button class="account-nav-btn w-full text-left px-4 py-3 rounded-lg font-medium transition-colors" data-section="orders">
+                                    <i class="fas fa-shopping-box mr-3"></i>
+                                    Order History
+                                </button>
+                                <button class="account-nav-btn w-full text-left px-4 py-3 rounded-lg font-medium transition-colors" data-section="wishlist">
+                                    <i class="fas fa-heart mr-3"></i>
+                                    Wishlist
+                                </button>
+                                <button class="account-nav-btn w-full text-left px-4 py-3 rounded-lg font-medium transition-colors" data-section="addresses">
+                                    <i class="fas fa-map-marker-alt mr-3"></i>
+                                    Addresses
+                                </button>
+                                <button class="account-nav-btn w-full text-left px-4 py-3 rounded-lg font-medium transition-colors" data-section="profile">
+                                    <i class="fas fa-user mr-3"></i>
+                                    Profile Settings
+                                </button>
+                                <button class="w-full text-left px-4 py-3 rounded-lg font-medium text-red-600 hover:bg-red-50 transition-colors" id="logoutBtn">
+                                    <i class="fas fa-sign-out-alt mr-3"></i>
+                                    Logout
+                                </button>
+                            </nav>
+                        </div>
+                    </div>
+                    
+                    <!-- Main Content -->
+                    <div class="lg:col-span-3">
+                        
+                        <!-- Overview Section -->
+                        <div class="account-section active" id="overviewSection">
+                            <div class="bg-white rounded-2xl shadow-lg p-8 mb-8">
+                                <h2 class="font-playfair text-2xl font-bold text-gray-900 mb-6">Account Overview</h2>
+                                
+                                <!-- Stats Cards -->
+                                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                                    <div class="bg-gradient-to-br from-aura-rose to-aura-pink text-white rounded-xl p-6">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <div class="text-2xl font-bold" id="totalOrders">0</div>
+                                                <div class="text-pink-100">Total Orders</div>
+                                            </div>
+                                            <i class="fas fa-shopping-bag text-3xl text-pink-200"></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="bg-gradient-to-br from-aura-purple to-indigo-600 text-white rounded-xl p-6">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <div class="text-2xl font-bold" id="totalSpent">$0</div>
+                                                <div class="text-purple-100">Total Spent</div>
+                                            </div>
+                                            <i class="fas fa-dollar-sign text-3xl text-purple-200"></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="bg-gradient-to-br from-aura-gold to-orange-500 text-white rounded-xl p-6">
+                                        <div class="flex items-center justify-between">
+                                            <div>
+                                                <div class="text-2xl font-bold" id="wishlistItems">0</div>
+                                                <div class="text-orange-100">Wishlist Items</div>
+                                            </div>
+                                            <i class="fas fa-heart text-3xl text-orange-200"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Recent Orders -->
+                                <h3 class="font-semibold text-lg text-gray-900 mb-4">Recent Orders</h3>
+                                <div class="space-y-4" id="recentOrders">
+                                    <!-- Recent orders will be loaded here -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Orders Section -->
+                        <div class="account-section hidden" id="ordersSection">
+                            <div class="bg-white rounded-2xl shadow-lg p-8">
+                                <h2 class="font-playfair text-2xl font-bold text-gray-900 mb-6">Order History</h2>
+                                <div class="space-y-6" id="orderHistory">
+                                    <!-- Order history will be loaded here -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Wishlist Section -->
+                        <div class="account-section hidden" id="wishlistSection">
+                            <div class="bg-white rounded-2xl shadow-lg p-8">
+                                <h2 class="font-playfair text-2xl font-bold text-gray-900 mb-6">My Wishlist</h2>
+                                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6" id="wishlistGrid">
+                                    <!-- Wishlist items will be loaded here -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Profile Settings Section -->
+                        <div class="account-section hidden" id="profileSection">
+                            <div class="bg-white rounded-2xl shadow-lg p-8">
+                                <h2 class="font-playfair text-2xl font-bold text-gray-900 mb-6">Profile Settings</h2>
+                                
+                                <form class="space-y-6" id="profileForm">
+                                    <div class="grid md:grid-cols-2 gap-6">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-900 mb-2">First Name</label>
+                                            <input type="text" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-aura-rose/30 focus:border-aura-rose" value="Jane">
+                                        </div>
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-900 mb-2">Last Name</label>
+                                            <input type="text" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-aura-rose/30 focus:border-aura-rose" value="Doe">
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-900 mb-2">Email Address</label>
+                                        <input type="email" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-aura-rose/30 focus:border-aura-rose" value="jane@example.com">
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-900 mb-2">Phone Number</label>
+                                        <input type="tel" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-aura-rose/30 focus:border-aura-rose" placeholder="(555) 123-4567">
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-900 mb-2">Date of Birth</label>
+                                        <input type="date" class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-aura-rose/30 focus:border-aura-rose">
+                                    </div>
+                                    
+                                    <div class="border-t border-gray-200 pt-6">
+                                        <h3 class="font-semibold text-lg text-gray-900 mb-4">Preferences</h3>
+                                        
+                                        <div class="space-y-4">
+                                            <label class="flex items-center space-x-3">
+                                                <input type="checkbox" class="w-4 h-4 text-aura-rose focus:ring-aura-rose border-gray-300 rounded" checked>
+                                                <span class="text-gray-700">Email newsletters and promotions</span>
+                                            </label>
+                                            
+                                            <label class="flex items-center space-x-3">
+                                                <input type="checkbox" class="w-4 h-4 text-aura-rose focus:ring-aura-rose border-gray-300 rounded" checked>
+                                                <span class="text-gray-700">SMS notifications for orders</span>
+                                            </label>
+                                            
+                                            <label class="flex items-center space-x-3">
+                                                <input type="checkbox" class="w-4 h-4 text-aura-rose focus:ring-aura-rose border-gray-300 rounded">
+                                                <span class="text-gray-700">Push notifications</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn-primary">
+                                        Save Changes
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <!-- Addresses Section -->
+                        <div class="account-section hidden" id="addressesSection">
+                            <div class="bg-white rounded-2xl shadow-lg p-8">
+                                <div class="flex items-center justify-between mb-6">
+                                    <h2 class="font-playfair text-2xl font-bold text-gray-900">Saved Addresses</h2>
+                                    <button class="btn-primary" id="addAddressBtn">
+                                        <i class="fas fa-plus mr-2"></i>
+                                        Add Address
+                                    </button>
+                                </div>
+                                
+                                <div class="grid md:grid-cols-2 gap-6" id="addressesGrid">
+                                    <!-- Saved addresses will be loaded here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/account.js"></script>
+    
+</body>
+</html>

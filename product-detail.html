@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details - Aura Cosmetics</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Swiper CSS for gallery -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
+    
+    <!-- Tailwind Custom Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                        'playfair': ['Playfair Display', 'serif']
+                    },
+                    colors: {
+                        'aura': {
+                            'rose': '#e11d48',
+                            'pink': '#ec4899',
+                            'purple': '#8b5cf6',
+                            'gold': '#f59e0b',
+                            'dark': '#1f2937',
+                            'light': '#f8fafc'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-inter bg-gray-50 text-gray-900">
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-md z-50 border-b border-gray-100 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-4 lg:px-6">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="index.html" class="font-playfair text-2xl lg:text-3xl font-bold text-aura-rose hover:text-aura-pink transition-colors duration-300">
+                        Aura
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 hover:text-aura-rose font-medium transition-colors duration-300">Home</a>
+                    <a href="products.html" class="nav-link text-gray-700 hover:text-aura-rose font-medium transition-colors duration-300">Products</a>
+                    <a href="#" class="nav-link text-gray-700 hover:text-aura-rose font-medium transition-colors duration-300">Collections</a>
+                    <a href="#" class="nav-link text-gray-700 hover:text-aura-rose font-medium transition-colors duration-300">About</a>
+                    <a href="#" class="nav-link text-gray-700 hover:text-aura-rose font-medium transition-colors duration-300">Contact</a>
+                </div>
+                
+                <!-- Search & Actions -->
+                <div class="flex items-center space-x-4">
+                    <!-- User Account -->
+                    <button class="p-2 rounded-full hover:bg-gray-100 transition-colors duration-300" id="userBtn">
+                        <i class="fas fa-user text-gray-700"></i>
+                    </button>
+                    
+                    <!-- Wishlist -->
+                    <button class="p-2 rounded-full hover:bg-gray-100 transition-colors duration-300 relative" id="wishlistBtn">
+                        <i class="fas fa-heart text-gray-700"></i>
+                        <span class="absolute -top-1 -right-1 bg-aura-rose text-white text-xs rounded-full w-4 h-4 flex items-center justify-center hidden" id="wishlistCount">0</span>
+                    </button>
+                    
+                    <!-- Cart -->
+                    <button class="p-2 rounded-full hover:bg-gray-100 transition-colors duration-300 relative" id="cartBtn">
+                        <i class="fas fa-shopping-bag text-gray-700"></i>
+                        <span class="absolute -top-1 -right-1 bg-aura-rose text-white text-xs rounded-full w-4 h-4 flex items-center justify-center" id="cartCount">0</span>
+                    </button>
+                    
+                    <!-- Mobile Menu Toggle -->
+                    <button class="lg:hidden p-2 rounded-full hover:bg-gray-100 transition-colors duration-300" id="mobileMenuBtn">
+                        <i class="fas fa-bars text-gray-700"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Breadcrumb -->
+    <section class="pt-24 pb-6 bg-white">
+        <div class="container mx-auto px-4 lg:px-6">
+            <nav class="flex items-center space-x-2 text-sm text-gray-500" data-aos="fade-up">
+                <a href="index.html" class="hover:text-aura-rose transition-colors">Home</a>
+                <i class="fas fa-chevron-right text-xs"></i>
+                <a href="products.html" class="hover:text-aura-rose transition-colors">Products</a>
+                <i class="fas fa-chevron-right text-xs"></i>
+                <span class="text-gray-900 font-medium" id="productBreadcrumb">Loading...</span>
+            </nav>
+        </div>
+    </section>
+    
+    <!-- Product Detail Section -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4 lg:px-6">
+            <div class="grid lg:grid-cols-2 gap-12 items-start">
+                
+                <!-- Product Images -->
+                <div class="space-y-6" data-aos="fade-right">
+                    
+                    <!-- Main Image Swiper -->
+                    <div class="relative">
+                        <div class="swiper product-gallery-main rounded-2xl overflow-hidden shadow-2xl" style="height: 600px;">
+                            <div class="swiper-wrapper" id="mainGallery">
+                                <!-- Images will be loaded dynamically -->
+                            </div>
+                            
+                            <!-- Navigation -->
+                            <div class="swiper-button-next text-aura-rose"></div>
+                            <div class="swiper-button-prev text-aura-rose"></div>
+                            
+                            <!-- Virtual Try-On Overlay -->
+                            <div class="absolute top-4 right-4 z-10">
+                                <button class="bg-aura-rose hover:bg-aura-pink text-white px-4 py-2 rounded-full font-semibold text-sm transition-colors duration-300" id="virtualTryOnBtn">
+                                    <i class="fas fa-camera mr-2"></i>Try On
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Thumbnail Gallery -->
+                    <div class="swiper product-gallery-thumbs">
+                        <div class="swiper-wrapper" id="thumbnailGallery">
+                            <!-- Thumbnails will be loaded dynamically -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product Information -->
+                <div class="space-y-8" data-aos="fade-left">
+                    
+                    <!-- Product Header -->
+                    <div>
+                        <div class="flex items-center space-x-3 mb-4">
+                            <div class="star-rating" id="productRating">
+                                <!-- Stars will be loaded dynamically -->
+                            </div>
+                            <span class="text-gray-600" id="reviewCount">Loading...</span>
+                        </div>
+                        
+                        <h1 class="font-playfair text-3xl lg:text-4xl font-bold text-gray-900 mb-4" id="productName">
+                            Loading...
+                        </h1>
+                        
+                        <p class="text-xl text-gray-600 mb-6" id="productDescription">
+                            Loading...
+                        </p>
+                        
+                        <!-- Price -->
+                        <div class="flex items-center space-x-4 mb-8">
+                            <span class="text-3xl font-bold text-aura-rose" id="productPrice">$0.00</span>
+                            <span class="text-xl text-gray-400 line-through hidden" id="originalPrice">$0.00</span>
+                            <span class="bg-red-100 text-red-600 px-3 py-1 rounded-full font-semibold hidden" id="discountBadge">0% OFF</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Shade Selector -->
+                    <div class="hidden" id="shadeSelector">
+                        <h3 class="font-semibold text-lg text-gray-900 mb-4">Choose Your Shade</h3>
+                        <div class="grid grid-cols-6 gap-3" id="shadeOptions">
+                            <!-- Shade options will be loaded dynamically -->
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2">
+                            <i class="fas fa-camera mr-1"></i>
+                            Use Virtual Try-On to find your perfect match
+                        </p>
+                    </div>
+                    
+                    <!-- Quantity & Actions -->
+                    <div class="space-y-6">
+                        <div class="flex items-center space-x-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-900 mb-2">Quantity</label>
+                                <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden">
+                                    <button class="quantity-btn" id="decreaseQty">
+                                        <i class="fas fa-minus text-xs"></i>
+                                    </button>
+                                    <span class="w-12 text-center font-semibold py-2" id="quantity">1</span>
+                                    <button class="quantity-btn" id="increaseQty">
+                                        <i class="fas fa-plus text-xs"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="space-y-4">
+                            <button class="btn-primary w-full text-lg py-4" id="addToCartBtn">
+                                <i class="fas fa-shopping-bag mr-2"></i>
+                                Add to Cart
+                            </button>
+                            <button class="btn-secondary w-full text-lg py-4" id="addToWishlistBtn">
+                                <i class="fas fa-heart mr-2"></i>
+                                Add to Wishlist
+                            </button>
+                        </div>
+                        
+                        <!-- Product Features -->
+                        <div class="grid grid-cols-2 gap-4 pt-6 border-t border-gray-200">
+                            <div class="flex items-center space-x-2 text-gray-600">
+                                <i class="fas fa-shipping-fast text-green-500"></i>
+                                <span class="text-sm">Free Shipping</span>
+                            </div>
+                            <div class="flex items-center space-x-2 text-gray-600">
+                                <i class="fas fa-undo text-blue-500"></i>
+                                <span class="text-sm">30-Day Returns</span>
+                            </div>
+                            <div class="flex items-center space-x-2 text-gray-600">
+                                <i class="fas fa-leaf text-green-500"></i>
+                                <span class="text-sm">Cruelty-Free</span>
+                            </div>
+                            <div class="flex items-center space-x-2 text-gray-600">
+                                <i class="fas fa-shield-alt text-purple-500"></i>
+                                <span class="text-sm">Dermatologist Tested</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Product Details Tabs -->
+    <section class="py-12 bg-gray-50">
+        <div class="container mx-auto px-4 lg:px-6">
+            
+            <!-- Tab Navigation -->
+            <div class="flex flex-wrap border-b border-gray-200 mb-8" data-aos="fade-up">
+                <button class="tab-btn active px-6 py-3 font-semibold text-aura-rose border-b-2 border-aura-rose" data-tab="details">
+                    Product Details
+                </button>
+                <button class="tab-btn px-6 py-3 font-semibold text-gray-600 hover:text-aura-rose transition-colors" data-tab="ingredients">
+                    Ingredients
+                </button>
+                <button class="tab-btn px-6 py-3 font-semibold text-gray-600 hover:text-aura-rose transition-colors" data-tab="how-to-use">
+                    How to Use
+                </button>
+                <button class="tab-btn px-6 py-3 font-semibold text-gray-600 hover:text-aura-rose transition-colors" data-tab="reviews">
+                    Reviews (<span id="reviewsCount">0</span>)
+                </button>
+            </div>
+            
+            <!-- Tab Content -->
+            <div class="tab-content" data-aos="fade-up">
+                
+                <!-- Product Details Tab -->
+                <div class="tab-pane active" id="details">
+                    <div class="bg-white rounded-2xl shadow-lg p-8">
+                        <h3 class="font-playfair text-2xl font-bold text-gray-900 mb-6">Product Details</h3>
+                        <div class="prose prose-lg max-w-none text-gray-700" id="productDetailsContent">
+                            <!-- Content will be loaded dynamically -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Ingredients Tab -->
+                <div class="tab-pane hidden" id="ingredients">
+                    <div class="bg-white rounded-2xl shadow-lg p-8">
+                        <h3 class="font-playfair text-2xl font-bold text-gray-900 mb-6">Ingredients</h3>
+                        <div class="space-y-4" id="ingredientsContent">
+                            <!-- Content will be loaded dynamically -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- How to Use Tab -->
+                <div class="tab-pane hidden" id="how-to-use">
+                    <div class="bg-white rounded-2xl shadow-lg p-8">
+                        <h3 class="font-playfair text-2xl font-bold text-gray-900 mb-6">How to Use</h3>
+                        <div class="space-y-4" id="howToUseContent">
+                            <!-- Content will be loaded dynamically -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Reviews Tab -->
+                <div class="tab-pane hidden" id="reviews">
+                    <div class="space-y-8">
+                        
+                        <!-- Reviews Summary -->
+                        <div class="bg-white rounded-2xl shadow-lg p-8">
+                            <div class="grid md:grid-cols-2 gap-8">
+                                <div>
+                                    <h3 class="font-playfair text-2xl font-bold text-gray-900 mb-4">Customer Reviews</h3>
+                                    <div class="flex items-center space-x-4 mb-4">
+                                        <div class="text-4xl font-bold text-aura-rose" id="averageRating">0.0</div>
+                                        <div>
+                                            <div class="star-rating text-lg" id="averageStars">
+                                                <!-- Stars will be loaded dynamically -->
+                                            </div>
+                                            <div class="text-gray-600" id="totalReviews">0 reviews</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Rating Breakdown -->
+                                <div class="space-y-2" id="ratingBreakdown">
+                                    <!-- Rating bars will be loaded dynamically -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Write Review -->
+                        <div class="bg-white rounded-2xl shadow-lg p-8">
+                            <h4 class="font-semibold text-lg text-gray-900 mb-4">Write a Review</h4>
+                            <form id="reviewForm" class="space-y-4">
+                                <div class="grid md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-900 mb-2">Your Name</label>
+                                        <input type="text" required class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-aura-rose/30 focus:border-aura-rose">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-900 mb-2">Rating</label>
+                                        <div class="flex space-x-1" id="reviewStars">
+                                            <i class="fas fa-star star cursor-pointer text-2xl" data-rating="1"></i>
+                                            <i class="fas fa-star star cursor-pointer text-2xl" data-rating="2"></i>
+                                            <i class="fas fa-star star cursor-pointer text-2xl" data-rating="3"></i>
+                                            <i class="fas fa-star star cursor-pointer text-2xl" data-rating="4"></i>
+                                            <i class="fas fa-star star cursor-pointer text-2xl" data-rating="5"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-900 mb-2">Review Title</label>
+                                    <input type="text" required class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-aura-rose/30 focus:border-aura-rose">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-900 mb-2">Your Review</label>
+                                    <textarea rows="4" required class="w-full px-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-aura-rose/30 focus:border-aura-rose" placeholder="Share your experience with this product..."></textarea>
+                                </div>
+                                <button type="submit" class="btn-primary">
+                                    Submit Review
+                                </button>
+                            </form>
+                        </div>
+                        
+                        <!-- Reviews List -->
+                        <div class="space-y-6" id="reviewsList">
+                            <!-- Reviews will be loaded dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Related Products -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4 lg:px-6">
+            <div class="text-center mb-12" data-aos="fade-up">
+                <h2 class="font-playfair text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+                    You May Also Like
+                </h2>
+                <p class="text-xl text-gray-600">
+                    Discover more products from our collection
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6" id="relatedProducts">
+                <!-- Related products will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- Virtual Try-On Modal -->
+    <div class="modal-overlay" id="virtualTryOnModal">
+        <div class="modal-content max-w-2xl">
+            <div class="p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-semibold text-gray-900">Virtual Try-On</h3>
+                    <button class="p-2 hover:bg-gray-100 rounded-full" id="closeTryOnModal">
+                        <i class="fas fa-times text-gray-500"></i>
+                    </button>
+                </div>
+                
+                <div class="try-on-container">
+                    <video class="try-on-video" autoplay playsinline muted id="tryOnVideo"></video>
+                    <div class="try-on-controls">
+                        <button class="bg-white/20 hover:bg-white/30 text-white px-4 py-2 rounded-full" id="captureBtn">
+                            <i class="fas fa-camera mr-2"></i>Capture
+                        </button>
+                        <div class="shade-selector" id="virtualShadeSelector">
+                            <!-- Shade options for virtual try-on -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/product-detail.js"></script>
+    
+</body>
+</html>

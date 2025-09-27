@@ -1,0 +1,98 @@
+{
+  "name": "Aura Cosmetics - Modern Beauty Redefined",
+  "short_name": "Aura Cosmetics",
+  "description": "Premium cosmetics with virtual try-on and personalized shade matching. Discover your perfect beauty products with Aura.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#e11d48",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "categories": ["shopping", "lifestyle", "beauty"],
+  "icons": [
+    {
+      "src": "https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&auto=format&fit=crop&w=192&q=80",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&auto=format&fit=crop&w=512&q=80",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&auto=format&fit=crop&w=180&q=80",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "https://images.unsplash.com/photo-1596462502278-27bfdc403348?ixlib=rb-4.0.3&auto=format&fit=crop&w=1080&h=1920&q=80",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "https://images.unsplash.com/photo-1596755389378-c31d21fd1273?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&h=1080&q=80",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "Shop Products",
+      "short_name": "Shop",
+      "description": "Browse our complete product collection",
+      "url": "/products.html",
+      "icons": [
+        {
+          "src": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?ixlib=rb-4.0.3&auto=format&fit=crop&w=96&q=80",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Virtual Try-On",
+      "short_name": "Try-On",
+      "description": "Try products with AR technology",
+      "url": "/product-detail.html",
+      "icons": [
+        {
+          "src": "https://images.unsplash.com/photo-1583847317554-dd3f2b37c341?ixlib=rb-4.0.3&auto=format&fit=crop&w=96&q=80",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "Shade Finder",
+      "short_name": "Shade Quiz",
+      "description": "Find your perfect shade match",
+      "url": "/shade-finder.html",
+      "icons": [
+        {
+          "src": "https://images.unsplash.com/photo-1631214540242-8d1ac3331e89?ixlib=rb-4.0.3&auto=format&fit=crop&w=96&q=80",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "My Account",
+      "short_name": "Account",
+      "description": "Manage your profile and orders",
+      "url": "/account.html",
+      "icons": [
+        {
+          "src": "https://images.unsplash.com/photo-1494790108755-2616c669-6266?ixlib=rb-4.0.3&auto=format&fit=crop&w=96&q=80",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ]
+}
